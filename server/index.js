@@ -12,6 +12,9 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
 console.log('程序开始执行');
+app.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
 
 // 中间的代码...
 

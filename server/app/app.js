@@ -15,6 +15,7 @@ const cors = (req, res, next) => {
     //跨域允许的请求方式
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.header("Content-Type", "application/json;charset=utf-8")
+
     if (req.method.toLowerCase() == 'options')
         res.sendStatus(200);  //让options尝试请求快速结束
     else
@@ -39,8 +40,13 @@ const staticDownload = (req, res, next) => {
         next();
 }
 app.use("/uploads", staticDownload, express.static('uploads'));
+
 // 处理 HTTP 请求体中的参数，将请求体解析成 JSON 对象或者 URL-encoded 格式，并限制请求体大小为100mb
 const bodyParser = require("body-parser");
 app.use(bodyParser.json({ limit: '100mb' })); //parse application/json
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true })); //parse application/json
+
+// 注册路由
+let indexRouter = require('./routes/auth')();
+app.use('/api/chat/v1/auth', cors, indexRouter);
 module.exports = app

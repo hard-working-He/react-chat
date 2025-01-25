@@ -1,94 +1,135 @@
-.bgContainer{
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  form{
-    background-color: rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-    z-index: 10;
-    width:4.5rem;
-    position: absolute;
-    top: 25%;
-    left:50%;
-    margin-left: -2.25rem;
-    transform: translateY(-50%);
-    backdrop-filter: blur(0.05rem);
-    .logintext{
-      margin-bottom: 0.2rem;
-      line-height: 0.5rem;
-      text-align: center;
-      font-size: 0.3rem;
-      font-weight: bolder;
-      color: #fff;
-      text-shadow: 0.02rem 0.02rem 0.04rem #000000;
+/* 定义颜色和尺寸变量 */
+@primary-color: #17b98d;
+@secondary-color: #28a770;
+@font-color: #fff;
+@input-border-color: #ccc;
+@input-focus-border-color: @secondary-color;
+@form-bg-color: rgba(255, 255, 255, 0.2);
+@button-bg-color: @primary-color;
+@button-hover-bg-color: @secondary-color;
+@gap-size: 20px;
+@border-radius: 4px;
+
+/* 背景容器样式 */
+.bgContainer {
+  background-color: #409cbd;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    /* 表单样式 */
+    form {
+        background-color: @form-bg-color;
+        overflow: hidden;
+        z-index: 10;
+        width: 400px;
+        padding: 30px;
+        backdrop-filter: blur(5px);
+        border-radius: @border-radius;
+        box-sizing: border-box;
+
+        /* 登录标题样式 */
+        .logintext {
+            margin-bottom: @gap-size;
+            line-height: 40px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: @font-color;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        /* 登录选项区域样式 */
+        .loginoptions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: @gap-size;
+
+            /* 输入框样式 */
+            input {
+                height: 40px;
+                width: 80%;
+                padding: 8px 16px;
+                border-radius: @border-radius;
+                font-size: 16px;
+                border: 1px solid @input-border-color;
+                box-shadow: none;
+                outline: none;
+
+                &:focus {
+                    border: 1px solid @input-focus-border-color;
+                }
+            }
+
+            /* 登录工具区域样式 */
+            .login_tools {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                color: @font-color;
+                font-size: 16px;
+
+                /* 记住密码工具样式 */
+                .remenberTool {
+                    flex: 1;
+                    text-align: center;
+                    cursor: pointer;
+
+                    .ant-checkbox-group-item {
+                        color: #3C5378;
+                    }
+
+                    span {
+                        color: @font-color;
+                    }
+                }
+
+                /* 忘记密码工具样式 */
+                .forgetpasTool {
+                    flex: 1;
+                    text-align: center;
+                    cursor: pointer;
+                }
+            }
+
+            /* 登录按钮样式 */
+            .login_button {
+                line-height: 40px;
+                background: @button-bg-color;
+                box-shadow: 0 4px 8px 0 rgba(9, 68, 131, 0.32);
+                border-radius: @border-radius;
+                color: @font-color;
+                font-size: 16px;
+                text-align: center;
+                letter-spacing: 4px;
+                text-indent: 4px;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+                border: none;
+
+                &:hover {
+                    background: @button-hover-bg-color;
+                }
+            }
+
+            /* 登录链接样式 */
+            .login_link {
+                text-align: center;
+                cursor: pointer;
+                margin-bottom: 10px;
+                font-size: 16px;
+
+                a {
+                    color: #e3e2e2;
+                    font-size: 16px;
+                }
+            }
+        }
     }
-    .loginoptions{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap:0.2rem;
-      input{
-        height: 0.3rem;
-        width: 80%;
-        padding:0.04rem 0.1rem;
-        border-radius: 0.02rem;
-        font-size: 0.14rem;
-        &:focus{
-            border:0.01rem solid #28a770;
-        }
-      }
-      .login_tools{
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        color:#fff;
-        .remenberTool{
-          flex:1;
-          text-align: center;
-          cursor: pointer;
-          .ant-checkbox-group-item {
-            color: #3C5378;
-          }
-          span{
-            color: #fff;
-          }
-        }
-        .forgetpasTool{
-          flex:1;
-          text-align: center;
-          cursor: pointer;
-        }
-      }
-      .login_button{
-        line-height: .3rem;
-        background: #17b98d;
-        box-shadow: 0 .04rem .08rem 0 rgba(27, 198, 161, 0.32);
-        border-radius: .04rem;
-        border-radius: .04rem;
-        color: #fff;
-        font-size: .16rem;
-        text-align: center;
-        letter-spacing:.4rem;
-        text-indent: .4rem;
-        cursor: pointer;
-        transition: all .3s ease-in-out;
-        &:hover{
-          background: #28a770;
-        }
-      }
-      .login_link{
-        text-align: center;
-        cursor: pointer;
-        margin-bottom: 0.1rem;
-        a{
-          color: #e3e2e2;
-          font-size: .14rem;
-        }
-      }
-    }
-  }
 }

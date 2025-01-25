@@ -7,8 +7,8 @@ const Login = () => {
   const handleSubmit = () => {
     console.log('登录！');
   };
-  const handleChange = () => {
-    console.log('change');
+  const handleChange = (e:any) => {
+    console.log('change',e.target.value);
   };
   // 记住密码
   const onChange = () => {
@@ -27,7 +27,7 @@ const Login = () => {
       <div className={styles.bgContainer}>
         <form action="" onSubmit={handleSubmit}>
           <div className={styles.logintext}>
-            <h2>Welcome</h2>
+            <h2>Webchat</h2>
           </div>
           <div className={styles.loginoptions}>
             <input type="text" placeholder="请输入用户名" name="username" onChange={handleChange} min="3" />

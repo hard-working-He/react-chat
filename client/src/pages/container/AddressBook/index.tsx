@@ -1,5 +1,5 @@
-import { message, Tabs, Tree } from 'antd';
-import type { DataNode } from 'antd/es/tree';
+import { message, Tabs, Tree, Tooltip } from 'antd';
+import type { DirectoryTreeProps } from 'antd/es/tree';
 import { useEffect, useState } from 'react';
 import styles from './index.module.less';
 
@@ -14,7 +14,12 @@ const AddressBook = () => {
       key: String(Math.random()), // 根据实际情况生成唯一的 key，这里简单使用了随机数
       selectable: false,
       children: group.friend.map((friend) => ({
-        title: friend.remark,
+        title: (
+          <div>
+            <img src={friend.avatar} alt="头像" />
+            <span>{friend.remark}</span>
+          </div>
+        ),
         key: String(friend.id),
         // 其他属性可以根据需要自行添加
       })),
@@ -35,7 +40,9 @@ const AddressBook = () => {
     <div className={styles.addressBookTabs}>
       <Tabs centered>
         <Tabs.TabPane tab="好友" key="1">
-          <Tree treeData={treeData} />
+          <div className={styles.friendTree}>
+            <Tree treeData={treeData} />
+          </div>
         </Tabs.TabPane>
         <Tabs.TabPane tab="群聊" key="2">
           群聊

@@ -1,4 +1,4 @@
-export const iconList = [
+export const menuIconList = [
   {
     icon: 'icon-liaotian',
     text: '聊天',

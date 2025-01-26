@@ -61,39 +61,9 @@
       }
     }
   }
-  .middleContainer {
-    flex: 5;
-    background-color: #e5e5e5;
-    display: flex;
-    flex-direction: column;
-    border-right: #e5e5e5 0.002rem solid;
-    .middleTop {
-      flex:1;
-      background-color: #f5f5f5;
-      padding: 0.1rem;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      .searchBox {
-        flex: 6;
-      }
-      .addBox {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        padding-bottom: 0.05rem;
-        cursor: pointer;
-      }
-      .addBox:hover {
-        color: #b8b5b5;
-      }
-    }
-    .middleBottom {
-      flex: 10;
-    }
-  }
+
   .rightContainer {
-    flex: 12;
+    flex: 17;
     background-color: #f5f5f5;
   }
 }
@@ -111,17 +81,5 @@
       }
     }
   }
-  .addContent {
-    ul {
-      list-style-type: none; // 移除列表默认的项目符号
-      padding: 0; // 移除默认的内边距
-      margin: 0; // 移除默认的外边距
-      display: flex; // 使用 flexbox 布局
-      flex-direction: column; // 让子元素垂直排列
-      li:hover {
-        cursor: pointer;
-        color: #b8b5b5;
-      }
-    }
-  }
+
 }

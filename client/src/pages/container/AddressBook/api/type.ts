@@ -1,3 +1,4 @@
+// 好友列表数据类型
 export interface IFriend {
   id: number;
   user_id: number;

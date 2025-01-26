@@ -1,25 +1,87 @@
-.container{
+
+.container {
   background-color: rgba(184, 11, 11, 0.2);
   overflow: hidden;
   z-index: 10;
-  width:70vw;
-  height: 60vh;
+  width: 80vw;
+  height: 70vh;
   position: absolute;
   top: 50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
-  
-  .leftContainer{
-    flex:1;
+
+  .leftContainer {
+    flex: 1;
     background-color: #2e2e2e;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .avatar {
+      position: relative; /* 相对定位 */
+      padding: 4px; /* 设置内边距，四个方向都是 10px */
+      box-sizing: border-box; /* 让内边距包含在元素的宽度和高度内 */
+      img {
+        width: 100%; /* 图片宽度占满容器 */
+        height: 100%; /* 图片高度占满容器 */
+        object-fit: cover; /* 裁剪图片以适应容器 */
+        object-position: center; /* 图片居中显示 */
+        border-radius: 10%;
+        cursor: pointer;
+      }
+    }
+    .iconList {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      // 定义通用的 ul 样式
+      ul {
+        list-style-type: none; // 移除列表默认的项目符号
+        padding: 0; // 移除默认的内边距
+        margin: 0; // 移除默认的外边距
+        display: flex; // 使用 flexbox 布局
+        flex-direction: column; // 让子元素垂直排列
+      }
+
+      // 顶部图标列表样式
+      .topIcons {
+        // 可以添加额外的样式，例如与底部图标列表的间距
+        margin-bottom: 10px;
+      }
+
+      // 图标列表项样式
+      li {
+        // 可以设置图标的大小、间距等样式
+        font-size: 0.7rem; // 图标大小
+        margin-bottom: 5px; // 图标之间的垂直间距
+        cursor: pointer; // 鼠标悬停时显示指针样式
+        text-align: center//图标是以文本（如字体图标）的形式存在，可以通过设置 li 元素的 text-align 属性为 center 来实现水平居中。
+      }
+    }
   }
-  .middleContainer{
-    flex:5;
+  .middleContainer {
+    flex: 5;
     background-color: #e5e5e5;
   }
-  .rightContainer{
-    flex:12;
+  .rightContainer {
+    flex: 12;
     background-color: #f5f5f5;
+  }
+}
+:global {
+  .ant-tooltip {
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        background-color: #fff;
+        color: #333;
+        font-size: 0.5rem;
+        transform: scale(0.8);
+        border-radius: 0;
+        letter-spacing: 0.02rem;
+      }
+    }
   }
 }

@@ -17,7 +17,7 @@ export class Request {
       (config: InternalAxiosRequestConfig) => {
         const token = this.getToken(); // 使用一个独立的方法来获取 token
         if (token) {
-          config.headers!.Authorization = token;
+          config.headers.Authorization = token;
         }
         return config;
       },
@@ -51,7 +51,7 @@ export class Request {
     return this.instance.delete(url, config);
   }
   private getToken(): string | null {
-    return sessionStorage.getItem("authToken");
+    return JSON.parse(sessionStorage.getItem('better-chat.authToken') || 'null');
   }
 }
 export default new Request({});

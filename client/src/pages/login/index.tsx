@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './index.module.less';
 import { message, Checkbox, Input, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import { handleLogin } from './api';
+import { tokenStorage } from '@/common/storage';
+
 const Login = () => {
+  const navigate = useNavigate();
   const [isRemember, setIsRemember] = useState(false);
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
@@ -43,6 +46,8 @@ const Login = () => {
         if (res.code === 200) {
           message.success('登录成功！', 1.5);
           setLoading(false);
+          tokenStorage.setItem(res.data.token);
+          navigate('/');
         } else {
           message.error(res.message, 1.5);
           setLoading(false);

@@ -1,10 +1,11 @@
 import styles from './index.module.less';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import { Input, Button, message } from 'antd';
 import { useState } from 'react';
 import { handleRegister } from './api';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -61,6 +62,7 @@ const Register = () => {
         if (res.code === 200) {
           message.success('注册成功！', 1.5);
           setLoading(false);
+          navigate('/login');
         } else {
           message.error(res.message, 1.5);
           setLoading(false);

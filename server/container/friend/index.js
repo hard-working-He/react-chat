@@ -90,7 +90,7 @@ async function addFriend(req, res) {
         username: username,
         avatar: avatar,
         remark: username,
-        group_id: results1[0].id,
+        group_id: results1.length>0?results1[0].id:null,
     }
     let {err:err1} = await addFriendRecord(friendInfo1)
     if (err1) {
@@ -104,7 +104,7 @@ async function addFriend(req, res) {
         username: sender.username,
         avatar: sender.avatar,
         remark: sender.username,
-        group_id: results2[0].id,
+        group_id: results2.length>0?results2[0].id:null,
     }
     let {err:err2} = await addFriendRecord(friendInfo2)
     if (err2) {
@@ -121,6 +121,7 @@ function getFriendList(req, res) {
     //根据id获取所有分组下的所有好友
     let id = req.user.id
     const sql = 'select id,name from friend_group where user_id=?'
+
     db.query(sql, [id], async (err, results) => {
         // 查询数据失败
         if (err) return RespError(res, RespServerErr)

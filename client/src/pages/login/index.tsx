@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import { message, Checkbox, Input, Button } from 'antd';
 import { Link , useNavigate} from 'react-router-dom';
 import { handleLogin } from './api';
-import { tokenStorage } from '@/common/storage';
+import { tokenStorage , userStorage } from '@/common/storage';
 import { encrypt, decrypt } from '@/utils/encryption';
 
 interface IUserInfo {
@@ -57,13 +57,15 @@ const Login = () => {
   };
 
 
-  // 判断本地是否有用户信息，有则无需向后台发起请求，直接登录
+  // 判断本地是否有用户信息，有且是相同的用户名则无需向后台发起请求，直接登录
   // 无则向后台发起请求，同时判断是否勾选了记住密码，勾选了则将用户信息存储到本地
   const handleSubmit = () => {
     // 前端数据校验
     getUserInfo().then((res) => {
-      if (res) {
+      if (res && res.info.username === username) {
         tokenStorage.setItem(res.token);
+         userStorage.setItem(JSON.stringify(res.info));
+        message.success('登录成功！', 1.5);
         navigate('/');
         return;
       } else {
@@ -94,6 +96,7 @@ const Login = () => {
               message.success('登录成功！', 1.5);
               setLoading(false);
               tokenStorage.setItem(res.data.token);
+              userStorage.setItem(JSON.stringify(res.data.info));
               // 判断是否勾选了记住密码
               if (isRemember) {
                 remenberUser(res.data.info);

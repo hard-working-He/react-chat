@@ -19,7 +19,7 @@ const Chat = () => {
         }
       })
       .catch(() => {
-        message.error('退出失败,请重试', 1.5);
+        message.error('无法发请求，退出失败,请重试', 1.5);
       });
   };
   return (

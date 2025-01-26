@@ -1,10 +1,11 @@
 module.exports = {
-    Login,
-    Register,
+  Login,
+  Logout,
+  Register,
 };
 const jwt = require('jsonwebtoken');
 const secretKey = 'xWbiNA3FqnK77MnVCj5CAcfA-VlXj7xoQLd1QaAme6l_t0Yp1TdHbSw';
-let { RespUserOrPassErr, RespParamErr, RespServerErr, RespUserExitErr, RespUpdateErr, RespUserNotExitErr } = require('../../model/error');
+let { RespUserOrPassErr, RespUserAlreadyLoggedIn, RespParamErr, RespServerErr, RespUserExitErr, RespUpdateErr, RespUserNotExitErr } = require('../../model/error');
 const { RespData, RespSuccess ,RespError} = require('../../model/resp');
 const { Query } = require('../../db/query');
 const crypto = require('crypto'); 
@@ -60,6 +61,19 @@ async function Login(req, res) {
         return RespData(res, data)
     }
     return RespError(res, RespUserOrPassErr)
+}
+/**
+ * 退出登录基本逻辑
+ * 1.获取到前端传来的username
+ * 2.删除redis中的token
+ * 3.返回成功
+ */
+async function Logout(req, res) {
+    const { username } = req.body
+    if (!username) {
+        return RespError(res, RespParamErr)
+    }
+    return RespSuccess(res)
 }
 /**
  * 注册的基本逻辑

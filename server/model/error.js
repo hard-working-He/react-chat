@@ -1,22 +1,23 @@
 // 返回码
 exports.RespTokenErr = 4000
 exports.RespUserOrPassErr = 4001
-exports.RespParamErr = 4002
-exports.RespUserExitErr = 4003
-exports.RespUserNotExitErr = 4004
-exports.RespUpdateErr = 4005
-exports.RespExitFriendErr = 4006
-exports.RespCreateErr = 4007
-exports.RespExitGroupErr = 4008
-exports.RespBingNotLogin = 4009
-exports.RespBingErrorProxy = 4010
-exports.RespGroupInsertError = 4011
-exports.RespGroupDeletError = 4012
+exports.RespUserAlreadyLoggedIn = 4002
+exports.RespParamErr = 4003
+exports.RespUserExitErr = 4004
+exports.RespUserNotExitErr = 4005
+exports.RespUpdateErr = 4006
+exports.RespExitFriendErr = 4007
+exports.RespCreateErr = 4008
+exports.RespExitGroupErr = 4009
+exports.RespBingNotLogin = 4010
+exports.RespBingErrorProxy = 4011
+exports.RespGroupInsertError = 4012
+exports.RespGroupDeletError = 4013
 exports.RespServerErr = 5000
 exports.RespMap = {
     4000: "客户端TOKEN错误",
     4001: "用户名或密码错误",
-     4002: "用户已登录",
+    4002: "用户已登录",
     4003: "参数有误",
     4004: "用户名或手机号已注册",
     4005: "用户名与手机号不匹配",

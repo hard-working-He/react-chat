@@ -1,16 +1,21 @@
-import { message, Tabs, Tree, Tooltip } from 'antd';
+import { Tabs, Tree, Tooltip, TabsProps, App, Form, Input, Select, Button } from 'antd';
 import type { DirectoryTreeProps } from 'antd/es/tree';
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useMemo } from 'react';
 import styles from './index.module.less';
 import { statusIconList ,iconList} from '../variable'
-import { getFriendList } from './api';
-import { IFriendGroup } from './api/type';
+import { getFriendList, getFriendInfoById } from './api';
+import { IFriendGroup, IFriendInfo } from './api/type';
 import SearchContainer from '@/components/SearchContainer';
+import { WechatOutlined } from '@ant-design/icons';
 const { TabPane } = Tabs;
 const { DirectoryTree } = Tree;
 
 const AddressBook = () => {
+
+  const { message } = App.useApp();
   const [friendList, setFriendList] = useState<IFriendGroup[]>([]); // 好友列表
+  const [infoChangeInstance] = Form.useForm<{ newRemark: string; newGroup: string }>();
+const [curFriendInfo, setCurFriendInfo] = useState<IFriendInfo>(); // 当前选中的好友信息
   // 难点: 如何将后端返回的数据转换成Tree组件需要的数据格式
   const treeData = friendList.map((group) => {
     return {
@@ -37,23 +42,36 @@ const AddressBook = () => {
             </span>
           </div>
         ),
-
-
-
         key: String(friend.id),
         isLeaf: true,
         // 其他属性可以根据需要自行添加
       })),
     };
   });
+  // 根据节点的key获取节点的信息
+  const getNodeInfoById = (id: number) => {
+    getFriendInfoById(id).then((res) => {
+      if (res.code === 200 && res.data) {
+       setCurFriendInfo(res.data);
+        infoChangeInstance?.setFieldsValue({
+          newRemark: res.data.remark,
+          newGroup: res.data.group_name,
+        });
+        
+        console.log(res.data)
+      } else {
+        message.error('获取好友信息失败', 1.5);
+      }
+    });
+  };
   const onSelect: DirectoryTreeProps['onSelect'] = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
+    getNodeInfoById(Number(info.node.key));
   };
   // 刷新好友列表
   const refreshFriendList = () => {
     getFriendList().then((res) => {
-      if (res.code === 200) {
-        console.log(res.data);
+      if (res.code === 200 && res.data) {
         setFriendList(res.data);
       } else {
         message.error('获取好友数据失败', 1.5);
@@ -63,35 +81,104 @@ const AddressBook = () => {
   useEffect(() => {
     refreshFriendList();
   }, []);
+  // tabs标签切换
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: `好友`,
+      children: (
+        <>
+          <div className={styles.friendTree}>
+            <DirectoryTree defaultExpandAll onSelect={onSelect} treeData={treeData} icon={null} showIcon={false} />
+          </div>
+        </>
+      ),
+    },
+    {
+      key: '2',
+      label: `群聊`,
+      children: <>群聊</>,
+    },
+  ];
+  // 用useMemo包裹，避免每次都重新渲染导致展开的好友列表收起
+  const LeftContainer = useMemo(() => {
+    return (
+      <div className={styles.leftContainer}>
+        <div className={styles.search}>
+          <SearchContainer />
+        </div>
+        <div className={styles.list}>
+          <div className={styles.addressBookTabs}>
+            <Tabs centered defaultActiveKey="1" items={items}></Tabs>
+          </div>
+        </div>
+      </div>
+    );
+  }, [friendList]);
   return (
     <>
       <div className={styles.addressBook}>
-        <div className={styles.leftContainer}>
-          <div className={styles.search}>
-            <SearchContainer />
-          </div>
-          <div className={styles.list}>
-            <div className={styles.addressBookTabs}>
-              <Tabs centered>
-                <TabPane tab="好友" key="1">
-                  <div className={styles.friendTree}>
-                    <DirectoryTree
-                      defaultExpandAll
-                      onSelect={onSelect}
-                      treeData={treeData}
-                      icon={null}
-                      showIcon={false}
-                    />
+        {LeftContainer}
+        <div className={styles.rightContainer}>
+          {curFriendInfo === undefined ? (
+            <WechatOutlined />
+          ) : (
+            <div className={styles.infoModal}>
+              <div className={styles.infoContainer}>
+                <div className={styles.avatar}>
+                  <img src={curFriendInfo?.avatar} alt="" />
+                </div>
+                <div className={styles.info}>
+                  <div className={styles.username}>{curFriendInfo?.username}</div>
+                  <div className={styles.signature}>
+                    {curFriendInfo?.signature === '' ? '暂无个性签名' : curFriendInfo?.signature}
                   </div>
-                </TabPane>
-                <TabPane tab="群聊" key="2">
-                  群聊
-                </TabPane>
-              </Tabs>
+                </div>
+              </div>
+              <div className={styles.changeContainer}>
+                <Form form={infoChangeInstance}>
+                  <Form.Item label="账号" name="username">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="昵称" name="username">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="备注" name="newRemark">
+                    <Input
+                      placeholder="请输入好友备注"
+                      onChange={(e) => infoChangeInstance.setFieldsValue({ newRemark: e.target.value })}
+                    />
+                  </Form.Item>
+                  <Form.Item label="分组" name="newGroup">
+                      <Select
+                         size="small"
+                      notFoundContent="暂无分组"
+                      placeholder="请选择分组"
+                      onChange={(e) => infoChangeInstance.setFieldsValue({ newGroup: e.target.value })}
+                    />
+                  </Form.Item>
+                </Form>
+                </div>
+                <div className={styles.btns}>
+                <Button
+                  onClick={() => {
+                    console.log('发送消息');
+                  }}
+                >
+                  发送消息
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    console.log('保存信息');
+                  }}
+                >
+                  保存信息
+                </Button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-        <div className={styles.rightContainer}>好友信息</div>
       </div>
     </>
   );

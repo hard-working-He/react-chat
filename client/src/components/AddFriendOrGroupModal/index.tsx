@@ -51,7 +51,7 @@ const AddFriendOrGroupModal = (props: IChangeInfoModal) => {
     };
     setLoading(true);
     const res = await addFriend(params);
-    if (res.code === 200) {
+    if (res.code === 200&&res.data) {
       message.success('添加成功', 1.5);
       setLoading(false);
       setOpen(false);
@@ -70,7 +70,7 @@ const AddFriendOrGroupModal = (props: IChangeInfoModal) => {
   // 获取模糊查询的群列表
   const getGroupListData = async (name: string) => {
     const res = await getGroupList(name);
-    if (res.code === 200) {
+    if (res.code === 200&& res.data) {
       setGroupList(res.data);
     } else {
       setGroupList([]);

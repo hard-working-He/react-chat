@@ -30,6 +30,8 @@ module.exports = function () {
     router.get('/group_list', authenticateToken, friend.getFriendGroupList)
     router.post('/create_group', authenticateToken, friend.createFriendGroup)
     router.post('/search_user', authenticateToken, friend.searchUser)
-    router.post('/add_friend', authenticateToken, friend.addFriend)
+  router.post('/add_friend', authenticateToken, friend.addFriend)
+  router.get('/get_friend', authenticateToken, friend.getFriendById)
+
     return router
 }

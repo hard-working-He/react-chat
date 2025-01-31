@@ -2,7 +2,7 @@ import { Tooltip, Input } from 'antd';
 import { useState } from 'react';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import AddFriendOrGroupModal from '@/components/AddFriendOrGroupModal';
-import CreateGroupModal from '@/components/CreateGroupModal';
+import CreateGroupChatModal from '@/components/CreateGroupChatModal';
 import styles from './index.module.less';
 const SearchContainer = () => {
   const [openAddModal, setAddModal] = useState(false);
@@ -39,7 +39,7 @@ const SearchContainer = () => {
       }
       {
         // 创建群聊弹窗
-        openCreateModal && <CreateGroupModal openmodal={openCreateModal} handleCreate={handleCreate} />
+        openCreateModal && <CreateGroupChatModal openmodal={openCreateModal} handleCreate={handleCreate} />
       }
     </>
   );

@@ -7,7 +7,7 @@ initGlobal();
  * 引入app并启动服务
  */
 const app = require('./app/app');
-app.use(require('express').static('./dist'));
+//app.use(require('express').static('./dist'));
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

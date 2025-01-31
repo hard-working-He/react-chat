@@ -1,0 +1,85 @@
+// 基础颜色变量，仿照微信风格
+@wechat-green: #1aad19;
+@wechat-gray: #999;
+@wechat-white: #fff;
+@wechat-black: #000;
+
+// 通用样式
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+// 模态框样式
+.Modal {
+  background-color: @wechat-white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 5rem;
+  max-width: 90vw; // 确保在小屏幕上不会超出屏幕宽度
+}
+
+// 创建模态框的容器样式
+.createModal {
+  padding: 1.5rem;
+}
+
+// 步骤 0 的样式
+.step0 {
+  // 选择容器样式
+.selectContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  // 好友列表样式
+.friendList {
+    width: 45%;
+  .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  // 已选择列表样式
+.selectList {
+    width: 45%;
+  .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  // 按钮容器样式
+.btns {
+    margin-top: 1.5rem;
+    text-align: right;
+  }
+}
+
+// 步骤 1 的样式
+.step1 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+
+  // 上一步按钮样式
+  button {
+    margin-top: 1rem;
+  }
+}
+
+// 按钮样式
+Button {
+  background-color: @wechat-green;
+  color: @wechat-white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(@wechat-green, 10%);
+  }
+}

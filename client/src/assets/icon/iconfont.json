@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1220",
+      "name": "眨眼",
+      "font_class": "zhayan",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "145454",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "1134343",
+      "name": "未读",
+      "font_class": "weidu",
+      "unicode": "e68a",
+      "unicode_decimal": 59018
+    },
+    {
+      "icon_id": "1305090",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "7009036",
+      "name": "video",
+      "font_class": "video",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    },
+    {
+      "icon_id": "8288828",
+      "name": "电话",
+      "font_class": "dianhua",
+      "unicode": "e842",
+      "unicode_decimal": 59458
+    },
+    {
       "icon_id": "6903296",
       "name": "离线",
       "font_class": "lixian",

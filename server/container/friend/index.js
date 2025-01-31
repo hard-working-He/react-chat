@@ -4,9 +4,11 @@ module.exports = {
     createFriendGroup,
     searchUser,
   addFriend,
-    getFriendById,
+  getFriendById,
+    updateFriendInfo,
 };
 let { RespParamErr, RespServerErr, RespExitFriendErr, RespUpdateErr, RespCreateErr } = require('../../model/error');
+const { v4: uuidv4 } = require('uuid');
 const { RespError, RespSuccess, RespData } = require('../../model/resp');
 const { Query } = require('../../db/query');
 //查询好友信息
@@ -84,14 +86,16 @@ async function addFriend(req, res) {
     let {sender, id, username, avatar} = req.body
     // 获取发送方所有的，以便将好友添加到默认分组中
     let sql = 'select id from friend_group  where user_id=?'
-    let { results:results1 } = await Query(sql, [sender.id])
+  let { results: results1 } = await Query(sql, [sender.id])
+   const uuid = uuidv4();
     // 将好友添加到自己的好友列表中
     let friendInfo1 = {
         user_id: id,
         username: username,
         avatar: avatar,
         remark: username,
-        group_id: results1.length>0?results1[0].id:null,
+      group_id: results1.length > 0 ? results1[0].id : null,
+        room: uuid,
     }
     let {err:err1} = await addFriendRecord(friendInfo1)
     if (err1) {
@@ -105,7 +109,8 @@ async function addFriend(req, res) {
         username: sender.username,
         avatar: sender.avatar,
         remark: sender.username,
-        group_id: results2.length>0?results2[0].id:null,
+      group_id: results2.length > 0 ? results2[0].id : null,
+        room: uuid,
     }
     let {err:err2} = await addFriendRecord(friendInfo2)
     if (err2) {
@@ -176,4 +181,17 @@ async function getFriendById(req, res) {
     // 查询数据失败
     if (err) return RespError(res, RespServerErr)
     RespData(res, results[0])
+}
+/**
+ * 修改好友信息（备注、分组）
+ */
+async function updateFriendInfo (req, res) {
+  let { friend_id, remark, group_id } = req.body
+  let sql = 'update friend set remark=?, group_id=? where id=?'
+  let { err, results } = await Query(sql, [remark, group_id, friend_id])
+  // 查询数据失败
+  if (err) return RespError(res, RespServerErr)
+  if (results.affectedRows === 1) {
+    return RespSuccess(res)
+  }
 }

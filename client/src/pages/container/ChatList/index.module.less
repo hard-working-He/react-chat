@@ -1,3 +1,10 @@
+/* 定义颜色和尺寸变量 */
+@primary-color: #07c160;
+@secondary-color: #f5f5f5;
+@text-color: #333;
+@border-color: #e5e5e5;
+@gap-size: 10px;
+@border-radius: 4px;
 .chatList{
   display: flex;
   .leftContainer{
@@ -12,10 +19,180 @@
     }
     .list{
        flex:1;
+       overflow: auto;
+      overflow-Y: scroll;
+      overflow: overlay;
+      .chat_item{
+        height: .7rem;
+        display: flex;
+        border-bottom: .005rem solid #d3d1d1;
+        cursor: pointer;
+        .chat_avatar{
+          flex:1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img{
+            width:.5rem;
+            height:.5rem;
+          }
+        }
+        .chat_info{
+          flex:2;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding-left: .1rem;
+          padding-right: .1rem;
+          .chat_name{
+            font-size: .15rem;
+          }
+          .chat_message{
+            font-size: .12rem;
+            width:1rem;
+            color: #999;
+            white-space: nowrap; /* 禁止文本换行 */
+            overflow: hidden; /* 隐藏超出部分 */
+            text-overflow: ellipsis; /* 使用省略号表示 */
+          }
+        }
+        .chat_info_time{
+          flex:1;
+          display: flex;
+          flex-direction: column;
+          padding: .12rem .1rem 0 .1rem;
+          .chat_time{
+            font-size: .12rem;
+            color: #999;
+            width:0.5rem;
+            white-space: nowrap; /* 禁止文本换行 */
+            overflow: hidden; /* 隐藏超出部分 */
+            text-overflow: ellipsis; /* 使用省略号表示 */
+          }
+          .chat_unread{
+            font-size: .12rem;
+            color: #999;
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+      .chat_item:hover{
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+    .list::-webkit-scrollbar {
+      width: 0.01rem;
+    }
+    .list::-webkit-scrollbar-thumb {
+      border-radius: 0.05rem;
+      background-color:transparent;
+    }
+    .list:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(106, 184, 106, 0.4);
     }
   }
-  .rightContainer{
-    flex:12;
-    background-color: #f5f5f5;
-  }
+  .rightContainer {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    border-left: 1px solid @border-color;
+
+    .chat_window {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+        .chat_receiver {
+            height: 60px;
+            line-height: 60px;
+            padding: 0 @gap-size;
+            border-bottom: 1px solid @border-color;
+            font-size: 18px;
+            font-weight: bold;
+            color: @text-color;
+        }
+
+        .chat_content {
+            flex: 1;
+            padding: @gap-size;
+            overflow-y: auto;
+            background-color: @secondary-color;
+        }
+
+        .chat_tool {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid @border-color;
+            padding: @gap-size;
+
+            .chat_tool_item {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: @gap-size;
+
+                .leftIcons,
+                .rightIcons {
+                    display: flex;
+                    list-style-type: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        margin-right: @gap-size;
+                        font-size: 20px;
+                        color: #999;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: @primary-color;
+                        }
+                    }
+                }
+            }
+
+            .chat_tool_input {
+                height: 100px;
+                padding: @gap-size;
+                border: 1px solid @border-color;
+                border-radius: @border-radius;
+                font-size: 16px;
+                resize: none;
+                outline: none;
+
+                &:focus {
+                    border-color: @primary-color;
+                }
+            }
+
+            .chat_tool_btn {
+                align-self: flex-end;
+                margin-top: @gap-size;
+
+                button {
+                    background-color: @primary-color;
+                    border: none;
+                    color: white;
+                    padding: 8px 16px;
+                    border-radius: @border-radius;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: darken(@primary-color, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .anticon-wechat-outlined {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        font-size: 100px;
+        color: #ccc;
+    }
+}
+
 }

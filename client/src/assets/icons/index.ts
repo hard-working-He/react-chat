@@ -31,14 +31,40 @@ export const menuIconList = [
     icon: 'icon-guanji',
     text: '更多',
   },
+  
 ];
 export const statusIconList = [
   {
-    icon: 'icon-zaixianzhuangtai-zaixian',
+    icon: 'icon-zaixian',
     text: '好友在线',
   },
   {
-    icon: 'icon-zaixianzhuangtai-lixian',
+    icon: 'icon-lixian',
     text: '好友离线请留言',
+  },{
+    icon:'icon-weidu',
+    text:'未读消息',
   },
-]
+];
+export const chatIconList = [
+  {
+    icon: 'icon-zhayan',
+    text: '表情',
+  },
+  {
+    icon: 'icon-tupian_huaban',
+    text: '图片',
+  },
+  {
+    icon: 'icon-wenjian',
+    text: '文件',
+  },
+  {
+    icon: 'icon-dianhua',
+    text: '语音聊天',
+  },
+  {
+    icon: 'icon-video',
+    text: '视频聊天',
+  },
+];

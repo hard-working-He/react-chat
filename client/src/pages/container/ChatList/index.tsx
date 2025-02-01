@@ -39,8 +39,14 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
     );
     // 获取消息记录
     newSocket.onmessage = (e) => {
-      setHistroyMsg(JSON.parse(e.data));
-      console.log('在房间的双方都会收到最新发送的一条消息拼接显示在房间的消息记录上', e.data);
+      // 判断返回的信息是历史消息数组还是单条消息
+      if (Array.isArray(JSON.parse(e.data))) {
+        setHistroyMsg(JSON.parse(e.data));
+        return;
+      } else {
+        // 如果是单条消息，则将其添加到历史消息数组中
+        setHistroyMsg((prevMsg) => [...prevMsg, JSON.parse(e.data)]);
+      }
     };
 
      newSocket.onerror = () => {
@@ -68,6 +74,7 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
       receiver_id: curChatInfo?.user_id,
       type: 'text',
       content: '消息内容',
+       avatar: JSON.parse(userStorage.getItem()).avatar,
     };
     socket.current?.send(JSON.stringify(mockMessage));
     refreshChatList();
@@ -179,7 +186,7 @@ const refreshChatList = async () => {
             <div className={styles.chat_window}>
               <div className={styles.chat_receiver}>{curChatInfo.name}</div>
               <div className={styles.chat_content}>
-                <ChatContainer histroyMsg={histroyMsg} />
+                {histroyMsg && histroyMsg.length != 0 && <ChatContainer histroyMsg={histroyMsg} />}
               </div>
               <div className={styles.chat_tool}>
                 <div className={styles.chat_tool_item}>

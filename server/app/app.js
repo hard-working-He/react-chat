@@ -2,7 +2,9 @@
  * 用于启动node服务并处理相关路由
  */
 const express = require('express');
+const expressWs = require('express-ws');
 const app = express();
+expressWs(app);
 /**
  * 解决跨域
  */

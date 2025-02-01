@@ -115,7 +115,12 @@ async function addFriend(req, res) {
     let {err:err2} = await addFriendRecord(friendInfo2)
     if (err2) {
         return RespError(res, RespCreateErr)
-    }
+  }
+   // 通知自己，让好友列表进行更新
+    NotificationUser({ receiver_username: sender.username, name: "friendList" })
+    //通知对方,让其好友列表进行更新
+    NotificationUser({ receiver_username: username, name: "friendList" })
+
     return RespSuccess(res)
 }
 /**

@@ -5,5 +5,6 @@ module.exports = function () {
   router.post('/login', auth.Login)
   router.post('/logout', auth.Logout)
   router.post('/register', auth.Register)
+  router.ws('/user_channel', auth.initUserNotification)
   return router
 }

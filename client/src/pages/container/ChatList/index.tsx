@@ -59,8 +59,8 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
   };
    // 选择聊天室
   const chooseRoom = (item: IMessageList) => {
+    setHistroyMsg([])
     setCurChatInfo(item);
-    // 建立webcocet连接(记得加个延时器)
     // 建立连接
     const params: IConnectParams = {
       room: item.room,
@@ -155,7 +155,17 @@ const refreshChatList = async () => {
                   </div>
                  <div className={styles.chat_info}>
                     <div className={styles.chat_name}>{item.name}</div>
-                    <div className={styles.chat_message}>{item.lastMessage}</div>
+                    <div className={styles.chat_message}>
+                      {item.type === 'text'
+                        ? item.lastMessage
+                        : item.type === 'image'
+                        ? '[图片]'
+                        : item.type === 'video'
+                        ? '[视频]'
+                        : item.type === 'file'
+                        ? '[文件]'
+                        : null}
+                    </div>
                   </div>
                   <div className={styles.chat_info_time}>
                     <Tooltip placement="bottomLeft" title={toggleTime_chatList(item.updated_at)} arrow={false}>

@@ -52,8 +52,8 @@ export const chatIconList = [
     text: '表情',
   },
   {
-    icon: 'icon-tupian_huaban',
-    text: '图片',
+    icon: 'icon-tupian',
+    text: '图片/视频',
   },
   {
     icon: 'icon-wenjian',

@@ -78,7 +78,7 @@ async function connectChat(ws, req) {
     // 获取历史消息
     let sql;
     let resp;
-    sql = 'SELECT m.*,u.avatar FROM (SELECT sender_id, receiver_id, content, room, media_type,message.created_at FROM message WHERE room =? AND type = ?  ORDER BY created_at ASC) AS m LEFT JOIN user as u ON u.id=m.sender_id';
+     sql = 'SELECT m.*,u.avatar FROM (SELECT sender_id, receiver_id, content, room, media_type, file_size, message.created_at FROM message WHERE room =? AND type = ?  ORDER BY created_at ASC) AS m LEFT JOIN user as u ON u.id=m.sender_id';
     resp = await Query(sql, [room, type]);
     let results = resp.results;
     let histroyMsg = results.map((item) => {

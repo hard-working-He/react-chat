@@ -4,14 +4,16 @@ import ChatContainer from '@/components/ChatContainer';
 
 import { WechatOutlined } from '@ant-design/icons';
 import { statusIconList, chatIconList } from '@/assets/icons';
-import { wsBaseURL } from '@/assets/links/wsBaseURL';
+import { wsBaseURL } from '@/assets/links/baseURL';
 import SearchContainer from '@/components/SearchContainer';
 import { userStorage } from '@/common/storage';
 import { toggleTime_chatList } from '@/utils/formatTime';
 import { IFriendInfo } from '../AddressBook/api/type';
 import { getChatList } from './api';
-import { IConnectParams, IMessageList, IMessage } from './api/type';
+import { IConnectParams,  IMessage } from './api/type';
 import styles from './index.module.less';
+import { ISendMessage, IMessageList } from '@/components/ChatTool/api/type';
+import ChatTool from '@/components/ChatTool';
 
 interface IChatListProps {
   initSelectedChat: IFriendInfo | null;
@@ -68,15 +70,8 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
     refreshChatList();
   };
   // 发送消息
-  const sendMessage = () => {
-    const mockMessage = {
-      sender_id: JSON.parse(userStorage.getItem()).id,
-      receiver_id: curChatInfo?.user_id,
-      type: 'text',
-      content: '消息内容',
-       avatar: JSON.parse(userStorage.getItem()).avatar,
-    };
-    socket.current?.send(JSON.stringify(mockMessage));
+const sendMessage = (message: ISendMessage) => {
+    socket.current?.send(JSON.stringify(message));
     refreshChatList();
   };
   // 刷新消息列表
@@ -188,33 +183,8 @@ const refreshChatList = async () => {
               <div className={styles.chat_content}>
                 {histroyMsg && histroyMsg.length != 0 && <ChatContainer histroyMsg={histroyMsg} />}
               </div>
-              <div className={styles.chat_tool}>
-                <div className={styles.chat_tool_item}>
-                  <ul className={styles.leftIcons}>
-                    {chatIconList.slice(0, 3).map((item) => {
-                      return (
-                        <Tooltip key={item.text} placement="bottomLeft" title={item.text} arrow={false}>
-                          <li className={`iconfont ${item.icon}`}></li>
-                        </Tooltip>
-                      );
-                    })}
-                  </ul>
-                  <ul className={styles.rightIcons}>
-                    {chatIconList.slice(3, 6).map((item) => {
-                      return (
-                        <Tooltip key={item.text} placement="bottomLeft" title={item.text} arrow={false}>
-                          <li className={`iconfont ${item.icon}`}></li>
-                        </Tooltip>
-                      );
-                    })}
-                  </ul>
-                </div>
-                <textarea className={styles.chat_tool_input}></textarea>
-                <div className={styles.chat_tool_btn}>
-                  <Button type="primary" onClick={sendMessage}>
-                    发送
-                  </Button>
-                </div>
+              <div className={styles.chat_input}>
+                <ChatTool curChatInfo={curChatInfo} sendMessage={sendMessage} />
               </div>
             </div>
           )}

@@ -2,7 +2,7 @@ import styles from './index.module.less'
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Tooltip, Modal, Button, message, Input,App } from 'antd'
-import { wsBaseURL } from '@/assets/links/wsBaseURL';
+import { wsBaseURL } from '@/assets/links/baseURL';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import ChangePwdModal from '@/components/ChangePwdModal'
 import ChangeInfoModal from '@/components/ChangeInfoModal'

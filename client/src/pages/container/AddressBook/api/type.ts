@@ -21,7 +21,6 @@ export interface IFriendGroup {
 // 好友信息类型
 export interface IFriendInfo {
   friend_id: number;
-  user_id: number;
   online_status: "online" | "offline";
   remark: string;
   group_id: number;

@@ -109,7 +109,7 @@ function initMessageTable() {
     `
     db.query(sql, (error, results, fields) => {
         initmessageStatisticsTable()
-        if (error) return console.log(error);
+      if (error) return console.log(error);
     });
 }
 //创建消息统计表
@@ -125,7 +125,7 @@ function initmessageStatisticsTable() {
       )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     `
     db.query(sql, (error, results, fields) => {
-        if (error) return console.log(error);
+      if (error) return console.log(error);
     });
 }
 // 3. 测试 mysql 模块能否正常工作

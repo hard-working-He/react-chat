@@ -137,6 +137,8 @@ db.query('select 1', (err, results) => {
     }
   initUserTable();
   initGroupTable();
+  initMessageTable();
+  initmessageStatisticsTable();
     console.log("MySQL连接成功");
 })
 // 4. 将连接好的数据库对象向外导出,供外界使用

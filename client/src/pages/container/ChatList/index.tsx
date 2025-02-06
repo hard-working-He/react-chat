@@ -63,7 +63,7 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
     setCurChatInfo(item);
     // 建立连接
     const params: IConnectParams = {
-      room: item.room,
+      room: item.room || "",
       sender_id: JSON.parse(userStorage.getItem()).id,
     };
     initSocket(params);
@@ -72,7 +72,7 @@ const [chatList, setChatList] = useState<IMessageList[]>([]); // 消息列表
   // 发送消息
 const sendMessage = (message: ISendMessage) => {
     socket.current?.send(JSON.stringify(message));
-    refreshChatList();
+    //refreshChatList();
   };
   // 刷新消息列表
 const refreshChatList = async () => {

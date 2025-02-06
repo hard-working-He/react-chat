@@ -111,7 +111,7 @@ const socket = useRef<WebSocket | null>(null); // websocket实例
           break;
         case 'chatList':
           //重新加载消息列表
-          chatListRef.current?.refreshChatList();
+          //chatListRef.current?.refreshChatList();
           break;
         //音视频--to do
         case 'audio':
@@ -207,7 +207,6 @@ const socket = useRef<WebSocket | null>(null); // websocket实例
           </div>
         </div>
         {/* <div className={styles.middleContainer}>
-          
         </div> */}
         <div className={styles.rightContainer}>
           {currentIcon === 'icon-message' ? (

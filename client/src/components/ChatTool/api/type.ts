@@ -16,7 +16,7 @@ export interface IMessageList {
   user_id: number;// 接受者id
   name: string; // 接受者备注名字
   receiver_username: string; // 接受者用户名
-  room: string; // 房间号
+  room: string | null; // 房间号
   updated_at: Date; // 发送时间
   unreadCount: number; // 未读消息数
   lastMessage: string; // 最后一条消息

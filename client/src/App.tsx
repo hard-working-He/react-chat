@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ChatWithPrivateRoute = withPrivateRoute(Chat);
 const App = () => {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
   // 每次路由变化时，都会执行这个函数
   const { pathname } = useLocation();
   useEffect(() => {

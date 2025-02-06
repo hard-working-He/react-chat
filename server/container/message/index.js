@@ -147,29 +147,31 @@ async function connectChat(ws, req) {
                     return
                 } else if (message.fileType == 'upload') {
                     fileContent = Buffer.from(message.content)
-                    // 接收文件块并写入文件
+                  // 接收文件块并写入文件
+                  if (writeStream && writeStream.writable) {
                     writeStream.write(fileContent);
                     receivedSize += fileContent.length;
                     // 如果接收完整个文件，则关闭文件流并发送上传成功消息
                     if (receivedSize === fileInfo.fileSize) {
-                        writeStream.end(async () => {
-                            msg.content = `/uploads/message/${room.replace(/-/g, "_")}/file/${message.filename}`
-                            msg.file_size = receivedSize
-                            message.content = `/uploads/message/${room.replace(/-/g, "_")}/file/${message.filename}`
-                            if (rooms[room][message.receiver_id]) {
-                                msg.status = 1
-                            } else {
-                                msg.status = 0
-                            }
-        sql = 'insert into message set ?'
-                            await Query(sql, msg)
-                           await checkAndModifyStatistics(room)
-                            for (const key in rooms[room]) {
-                                rooms[room][key].send(JSON.stringify(message))
-                            }
-                            return
-                        });
+                      writeStream.end(async () => {
+                        msg.content = `/uploads/message/${room.replace(/-/g, "_")}/file/${message.filename}`
+                        msg.file_size = receivedSize
+                        message.content = `/uploads/message/${room.replace(/-/g, "_")}/file/${message.filename}`
+                        if (rooms[room][message.receiver_id]) {
+                          msg.status = 1
+                        } else {
+                          msg.status = 0
+                        }
+                        sql = 'insert into message set ?'
+                        await Query(sql, msg)
+                        await checkAndModifyStatistics(room)
+                        for (const key in rooms[room]) {
+                          rooms[room][key].send(JSON.stringify(message))
+                        }
+                        return
+                      });
                     }
+                  }
                     return
                 }
                 break
